@@ -1,6 +1,8 @@
 <template>
   <div>
-    dashboard
+    <br>
+    <h1>Dashboard</h1>
+    <br>
     <b-container>
       <b-table ref="table" :items="items" :fields="fields" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <template v-slot:cell(first_name)="data">
@@ -11,6 +13,10 @@
           </div>
         </template>
       </b-table>
+      <br>
+      <div>
+        <b-button>Add Data</b-button>
+      </div>
     </b-container>
   </div>
 </template>

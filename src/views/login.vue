@@ -23,7 +23,7 @@
                 <label class="forminput">Username</label>
                 <b-form-input
                   id="input-1"
-                  v-model="form.employee_id"
+                  v-model="form.user_id"
                   type="text"
                   required
                   placeholder="Enter username"
@@ -56,13 +56,13 @@
 
 <script>
 import axios from 'axios'
-import md5 from 'md5'
+// import md5 from 'md5'
 import VueJwtDecode from 'vue-jwt-decode'
 export default {
   data () {
     return {
       form: {
-        employee_id: '',
+        user_id: '',
         password: ''
       },
       show: true,
@@ -89,8 +89,8 @@ export default {
   },
   methods: {
     postLogin () {
-      this.form.employee_id = this.form.employee_id.toUpperCase()
-      this.form.password = md5(this.form.password)
+      // this.form.user_id = this.form.user_id.toUpperCase()
+      // this.form.password = md5(this.form.password)
       // console.log(this.data)
       axios.post('http://localhost:4000/emp/login', this.form)
         .then(response => {
@@ -105,12 +105,12 @@ export default {
             localStorage.setItem('jwt', JSON.stringify(response.data))
             console.log(jwt.iat)
             console.log(jwt.sub)
-            // location.replace('/dashboard')
+            location.replace('/dashboard')
           }
         }).catch(e => {
           if (e.response.status === 404) {
             this.error = false
-            this.form.employee_id = ''
+            this.form.user_id = ''
             this.form.password = ''
           } else if (e.response.status === 500) {
             this.error = 500
@@ -121,7 +121,7 @@ export default {
   metaInfo () {
     return {
       title: 'Login',
-      titleTemplate: '%s - LPTT'
+      titleTemplate: '%s - MYC'
     }
   }
 }
