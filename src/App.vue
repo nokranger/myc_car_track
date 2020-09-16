@@ -27,13 +27,13 @@
               <b-dropdown-item href="#">FA</b-dropdown-item>
             </b-nav-item-dropdown> -->
 
-            <b-nav-item-dropdown right>
+            <!-- <b-nav-item-dropdown right> -->
               <!-- Using 'button-content' slot -->
-              <template v-slot:button-content>
+              <!-- <template v-slot:button-content>
                 <em>User</em>
-              </template>
+              </template> -->
               <!-- <b-dropdown-item href="#">Profile</b-dropdown-item> -->
-              <b-dropdown-item href="#">
+              <!-- <b-dropdown-item href="#">
                 <b-list-group style="max-width: 300px;">
                   <b-list-group-item class="d-flex align-items-center">
                     <b-avatar class="mr-3"></b-avatar>
@@ -41,8 +41,8 @@
                     <b-badge>5</b-badge>
                   </b-list-group-item>
                 </b-list-group>
-              </b-dropdown-item>
-            </b-nav-item-dropdown>
+              </b-dropdown-item> -->
+            <!-- </b-nav-item-dropdown> -->
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
