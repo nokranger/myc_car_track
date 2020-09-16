@@ -3,7 +3,7 @@
     <div v-if="pathname === 'login'"></div>
     <div v-else>
       <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand href="#">MYC</b-navbar-brand>
+        <b-navbar-brand href="/dashboard">MYC</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

@@ -5,10 +5,10 @@
     <br>
     <b-container>
       <b-table ref="table" :items="items" :fields="fields" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
-        <template v-slot:cell(first_name)="data">
+        <template v-slot:cell(cus_code)="data">
           <div>
-            <router-link :to="'/detail/' + data.item.first_name">
-            {{data.item.first_name}}
+            <router-link :to="'/detail/' + data.item.cus_code">
+            {{data.item.cus_code}}
             </router-link>
           </div>
         </template>
@@ -62,7 +62,7 @@
                 <b-col>
                   Create At
                   <div>
-                    <b-form-input type="date" v-model="customer.create_at" ref="create_at"></b-form-input>
+                    <b-form-input type="datetime-local" v-model="customer.create_at" ref="create_at"></b-form-input>
                   </div>
                 </b-col>
               </b-row>
@@ -88,50 +88,45 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      fields: ['cus_code', 'cus_name', 'lat', 'lon', 'available', 'route_id', 'create_at'],
+      fields: [{
+        sortable: true,
+        key: 'cus_code'
+      }, {
+        sortable: true,
+        key: 'cus_name'
+      }, 'lat', 'lon', 'available', 'route_id', 'create_at'],
       items: [],
-      customer: [],
-      code: '',
-      form: {
-        test: 'aaa',
-        password: 'bbbb'
+      customer: {
+        cus_code: '',
+        cus_name: '',
+        lat: '',
+        lon: '',
+        available: '',
+        route_id: '',
+        create_at: ''
       }
     }
+  },
+  beforeCreate () {
+    axios.get('http://localhost:4000/customer/get').then(response => {
+      this.items = response.data.result
+    })
   },
   methods: {
     send () {
       console.log('send')
-      console.log('ss', this.$refs.cus_code.localValue)
-      this.code = this.$refs.cus_code.localValue
-      axios.post('http://localhost:4000/emp/login', this.form)
-        .then(response => {
-          // console.log(VueJwtDecode.decode(response.data))
-          // const jwt = VueJwtDecode.decode(response.data)
-          // if (jwt.loginSuccessfull === true) {
-          //   console.log('ss')
-          //   this.error = true
-          //   localStorage.setItem('username', JSON.stringify(jwt.sub))
-          //   localStorage.setItem('role', JSON.stringify(jwt.role))
-          //   localStorage.setItem('iat', JSON.stringify(jwt.iat))
-          //   localStorage.setItem('jwt', JSON.stringify(response.data))
-          //   console.log(jwt.iat)
-          //   console.log(jwt.sub)
-          //   location.replace('/dashboard')
-          // }
-        }).catch(e => {
-          if (e.response.status === 404) {
-            this.error = false
-            this.form.user_id = ''
-            this.form.password = ''
-          } else if (e.response.status === 500) {
-            this.error = 500
-          }
-        })
-      // axios.post('http://localhost:4000/customer/login', this.code).then(response => {
-      //   this.items = response.data.result
-      //   this.customer = []
-      //   this.$refs.table.refresh()
-      // })
+      console.log('', this.customer)
+      axios.post('http://localhost:4000/customer/add', this.customer).then(response => {
+        this.items = response.data.result
+        this.customer = []
+        this.$refs.table.refresh()
+      })
+    }
+  },
+  metaInfo () {
+    return {
+      title: 'Dashboard',
+      titleTemplate: '%s - MYC'
     }
   }
 }
