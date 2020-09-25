@@ -27,22 +27,24 @@
               <b-dropdown-item href="#">FA</b-dropdown-item>
             </b-nav-item-dropdown> -->
 
-            <!-- <b-nav-item-dropdown right> -->
+            <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
-              <!-- <template v-slot:button-content>
+              <template v-slot:button-content>
                 <em>User</em>
-              </template> -->
+              </template>
               <!-- <b-dropdown-item href="#">Profile</b-dropdown-item> -->
-              <!-- <b-dropdown-item href="#">
+              <b-dropdown-item href="#">
+                <p>Profile</p>
                 <b-list-group style="max-width: 300px;">
                   <b-list-group-item class="d-flex align-items-center">
                     <b-avatar class="mr-3"></b-avatar>
-                    <span class="mr-auto">J. Circlehead</span>
-                    <b-badge>5</b-badge>
+                    <span class="mr-auto">{{username}}</span>
+                    <!-- <b-badge>5</b-badge> -->
                   </b-list-group-item>
                 </b-list-group>
-              </b-dropdown-item> -->
-            <!-- </b-nav-item-dropdown> -->
+              </b-dropdown-item>
+              <b-dropdown-item v-on:click="logOut">Sign Out</b-dropdown-item>
+            </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -63,13 +65,26 @@ export default {
       imagecolor: 'linear-gradient(to top, #051937, #0a4066, #006c96, #009cc3, #12cfeb)',
       // background-image: linear-gradient(to bottom, #051937, #0a4066, #006c96, #009cc3, #12cfeb);
       heights: '1000px',
-      pathname: ''
+      pathname: '',
+      username: ''
     }
   },
   mounted () {
     if (window.location.pathname === '/') {
       this.pathname = 'login'
       console.log(this.pathname)
+    }
+    this.username = JSON.parse(localStorage.getItem('username'))
+    console.log('username', this.username)
+  },
+  methods: {
+    logOut () {
+      console.log('logout')
+      localStorage.removeItem('iat')
+      localStorage.removeItem('username')
+      localStorage.removeItem('jwt')
+      localStorage.removeItem('role')
+      location.replace('/')
     }
   }
 }
